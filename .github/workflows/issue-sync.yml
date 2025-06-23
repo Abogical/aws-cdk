@@ -11,9 +11,8 @@ jobs:
     name: Sync Issue with Project Board
     runs-on: ubuntu-latest
     permissions:
-      issues: write
-      pull-requests: write
-      contents: read
+      issues: read
+      repository-projects: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
