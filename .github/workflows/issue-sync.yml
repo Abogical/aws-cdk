@@ -3,7 +3,7 @@ name: Issue Sync
 on:
   issue_comment:
     types: [created, edited, deleted]
-  issue:
+  issues:
     types: [opened]
 
 jobs:
