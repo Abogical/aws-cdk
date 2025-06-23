@@ -13,7 +13,11 @@ export const syncIssue = async (issue: string) => {
     throw new Error(`Issue ${issue} not found`);
   }
 
-  const issueDetails = repoData.issue;
+  await syncIssueData(repoData.issue);
+};
+
+export const syncIssueData = async (issueDetails: any) => {
+  const github = Github.default();
 
   // If issue is part of the project, set the issue's project properties
   let projectItemId = undefined;

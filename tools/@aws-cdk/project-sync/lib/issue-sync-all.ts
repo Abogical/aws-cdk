@@ -1,6 +1,6 @@
 import { PROJECT_NUMBER } from './config';
 import { Github } from './github';
-import { syncIssue } from './issue-sync';
+import { syncIssueData } from './issue-sync';
 
 export async function syncAllIssues() {
   try {
@@ -10,7 +10,7 @@ export async function syncAllIssues() {
 
     let hasNextPage = true;
     let cursor: string | undefined = undefined;
-    let allIssues: { number: number; title: string }[] = [];
+    let issueCounter = 0;
 
     // Use pagination to fetch all issues from project
     while (hasNextPage) {
@@ -31,42 +31,28 @@ export async function syncAllIssues() {
         .filter((item: any) => item.content?.number != undefined)
         .map((item: any) => item.content);
 
-      allIssues = [...allIssues, ...issues];
-
       console.log(`Fetched page with ${projectItems.length} project items, found ${issues.length} issues`);
+      issueCounter += issues.length;
 
-      // Add a small delay between requests to avoid hitting rate limits
-      if (hasNextPage) {
+      // Process each issue sequentially
+      for (const issue of issues) {
+        const issueNumber = issue.number.toString();
+        console.log(`Processing issue #${issueNumber}: ${issue.title}`);
+
+        try {
+          await syncIssueData(issue);
+          console.log(`Successfully synced issue #${issueNumber}`);
+        } catch (error) {
+          console.error(`Error syncing issue #${issueNumber}:`, error);
+        }
+
+        // Add a small delay between requests to avoid hitting rate limits
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
     }
 
-    console.log(`Found a total of ${allIssues.length} issues in project ${PROJECT_NUMBER}`);
-
-    // Process each issue sequentially
-    for (const issue of allIssues) {
-      const issueNumber = issue.number.toString();
-      console.log(`Processing issue #${issueNumber}: ${issue.title}`);
-
-      try {
-        await syncIssue(issueNumber);
-        console.log(`Successfully synced issue #${issueNumber}`);
-      } catch (error) {
-        console.error(`Error syncing issue #${issueNumber}:`, error);
-      }
-
-      // Add a small delay between requests to avoid hitting rate limits
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    }
-
-    console.log('Finished syncing all issues from project 302');
+    console.log(`Finished syncing ${issueCounter} issue(s) from project 302`);
   } catch (error) {
     console.error('Error in syncAllIssues:', error);
   }
 }
-
-// Execute the function
-syncAllIssues().catch(error => {
-  console.error('Unhandled error:', error);
-  process.exit(1);
-});

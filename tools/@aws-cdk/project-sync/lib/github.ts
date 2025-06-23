@@ -1,16 +1,85 @@
-export class Github {
-  token: string;
-
-  constructor(token: string) {
-    this.token = token;
+const issueQuery = `
+  createdAt
+  timelineItems(last: 100) {
+    nodes{
+      ... on IssueComment {
+        createdAt
+        author {
+            login
+        }
+      }
+      ... on CrossReferencedEvent {
+        createdAt
+        actor {
+            login
+        }
+      }
+      ... on ClosedEvent {
+        createdAt
+        actor {
+            login
+        }
+      }
+      ... on ReopenedEvent {
+        createdAt
+        actor {
+            login
+        }
+      }
+      ... on LabeledEvent {
+        createdAt
+        actor {
+            login
+        }
+      }
+      ... on UnlabeledEvent {
+        createdAt
+        actor {
+            login
+        }
+      }
+      ... on AssignedEvent {
+        createdAt
+        actor {
+            login
+        }
+      }
+      ... on UnassignedEvent {
+        createdAt
+        actor {
+            login
+        }
+      }
+    }
   }
+  reactions(last: 1) {
+    nodes {
+      createdAt
+    }
+  }
+  projectItems(first: 100) {
+    nodes {
+      id
+      project {
+          number
+      }
+    }
+  }
+`;
 
+export class Github {
   static default(): Github {
     if (!process.env.GITHUB_TOKEN) {
       throw new Error('GITHUB_TOKEN is not set');
     }
 
     return new Github(process.env.GITHUB_TOKEN);
+  }
+
+  token: string;
+
+  constructor(token: string) {
+    this.token = token;
   }
 
   async authGraphQL(query: string) {
@@ -45,6 +114,7 @@ export class Github {
                   ... on Issue {
                     number
                     title
+                    ${issueQuery}
                   }
                 }
               }
@@ -80,72 +150,7 @@ export class Github {
       query {
         repository(owner: "aws", name: "aws-cdk") {
           issue(number: ${issue}) {
-            createdAt
-            timelineItems(last: 100) {
-              nodes{
-                ... on IssueComment {
-                  createdAt
-                  author {
-                      login
-                  }
-                }
-                ... on CrossReferencedEvent {
-                  createdAt
-                  actor {
-                      login
-                  }
-                }
-                ... on ClosedEvent {
-                  createdAt
-                  actor {
-                      login
-                  }
-                }
-                ... on ReopenedEvent {
-                  createdAt
-                  actor {
-                      login
-                  }
-                }
-                ... on LabeledEvent {
-                  createdAt
-                  actor {
-                      login
-                  }
-                }
-                ... on UnlabeledEvent {
-                  createdAt
-                  actor {
-                      login
-                  }
-                }
-                ... on AssignedEvent {
-                  createdAt
-                  actor {
-                      login
-                  }
-                }
-                ... on UnassignedEvent {
-                  createdAt
-                  actor {
-                      login
-                  }
-                }
-              }
-            }
-            reactions(last: 1) {
-              nodes {
-                createdAt
-              }
-            }
-            projectItems(first: 100) {
-              nodes {
-                id
-                project {
-                    number
-                }
-              }
-            }
+            ${issueQuery}
           }
         }
       }
