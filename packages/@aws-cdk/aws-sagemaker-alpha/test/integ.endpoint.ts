@@ -48,7 +48,7 @@ const modelWithoutArtifact = new sagemaker.Model(stack, 'ModelWithoutArtifact', 
   containers: [{ image }],
 });
 
-const endpointConfig = new sagemaker.EndpointConfig(stack, 'EndpointConfig', {
+const endpointConfig = new sagemaker.EndpointConfig(stack, 'EndpointConfigv2', {
   instanceProductionVariants: [
     {
       model: modelWithArtifact,
