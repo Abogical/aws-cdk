@@ -1,15 +1,16 @@
 {
-  "version": "30.0.0",
+  "version": "48.0.0",
   "files": {
-    "a6f5e41c0212fcbcdb1d7cdb7acbe27cf764613445faf44701294353f7c98c9b": {
+    "419a701233ce6ca4fc1b25d5585d055c94ab94a528cefe70c8ed391b27bf747f": {
+      "displayName": "AlarmWithLabelIntegrationTest Template",
       "source": {
         "path": "AlarmWithLabelIntegrationTest.template.json",
         "packaging": "file"
       },
       "destinations": {
-        "current_account-current_region": {
+        "current_account-current_region-1a8f8275": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "a6f5e41c0212fcbcdb1d7cdb7acbe27cf764613445faf44701294353f7c98c9b.json",
+          "objectKey": "419a701233ce6ca4fc1b25d5585d055c94ab94a528cefe70c8ed391b27bf747f.json",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }

@@ -12,8 +12,20 @@ class AlarmWithLabelIntegrationTest extends Stack {
       label: 'Metric [AVG: ${AVG}]',
     });
 
+    const testMetric2 = new Metric({
+      namespace: 'CDK/Test',
+      metricName: 'Metric',
+      label: 'Metric [AVG: ${AVG}]',
+    });
+
     new Alarm(this, 'Alarm1', {
       metric: testMetric,
+      threshold: 100,
+      evaluationPeriods: 3,
+    });
+
+    new Alarm(this, 'Alarm4', {
+      metric: testMetric2,
       threshold: 100,
       evaluationPeriods: 3,
     });
