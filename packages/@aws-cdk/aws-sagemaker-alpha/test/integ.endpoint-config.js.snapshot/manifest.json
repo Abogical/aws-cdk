@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/161b11c5dab3c125f13e76317f5c50b480b7d09b78fb3eb1066bf350614aabcd.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/af8d42a6adec0da01a21868710932407928633600d440dfa2271d83475d607a8.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -589,7 +589,7 @@
             "data": "ModelWithoutArtifactAndVpcModel9A8AD144"
           }
         ],
-        "/aws-cdk-sagemaker-endpointconfig/EndpointConfigv2": [
+        "/aws-cdk-sagemaker-endpointconfig/EndpointConfig2": [
           {
             "type": "aws:cdk:analytics:construct",
             "data": "*"
@@ -607,10 +607,10 @@
             "data": "*"
           }
         ],
-        "/aws-cdk-sagemaker-endpointconfig/EndpointConfigv2/EndpointConfig": [
+        "/aws-cdk-sagemaker-endpointconfig/EndpointConfig2/EndpointConfig": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "EndpointConfigv2EndpointConfig3FA633F2"
+            "data": "EndpointConfig2EndpointConfigEC006EE2"
           }
         ],
         "/aws-cdk-sagemaker-endpointconfig/BootstrapVersion": [
@@ -623,15 +623,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "CheckBootstrapVersion"
-          }
-        ],
-        "EndpointConfigFD7B6F91": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "EndpointConfigFD7B6F91",
-            "trace": [
-              "!!DESTRUCTIVE_CHANGES: WILL_DESTROY"
-            ]
           }
         ]
       },

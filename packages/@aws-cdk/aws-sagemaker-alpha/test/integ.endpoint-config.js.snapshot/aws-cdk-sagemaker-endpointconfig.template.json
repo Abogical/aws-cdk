@@ -675,7 +675,7 @@
     "ModelWithoutArtifactAndVpcRole10D89F15"
    ]
   },
-  "EndpointConfigv2EndpointConfig3FA633F2": {
+  "EndpointConfig2EndpointConfigEC006EE2": {
    "Type": "AWS::SageMaker::EndpointConfig",
    "Properties": {
     "ProductionVariants": [
