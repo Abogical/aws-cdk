@@ -73,6 +73,26 @@ endpointConfig.addInstanceProductionVariant({
   initialVariantWeight: 2.0,
 });
 
+const endpointConfig2 = new sagemaker.EndpointConfig(stack, 'EndpointConfig2', {
+  instanceProductionVariants: [
+    {
+      model: modelWithArtifactAndVpc,
+      variantName: 'firstVariant',
+      instanceType: sagemaker.InstanceType.M5_LARGE,
+    },
+    {
+      model: modelWithArtifactAndVpc,
+      variantName: 'secondVariant',
+    },
+  ],
+});
+
+endpointConfig2.addInstanceProductionVariant({
+  model: modelWithoutArtifactAndVpc,
+  variantName: 'thirdVariant',
+  initialVariantWeight: 2.0,
+});
+
 new IntegTest(app, 'integtest-endpointconfig', {
   testCases: [stack],
 });
