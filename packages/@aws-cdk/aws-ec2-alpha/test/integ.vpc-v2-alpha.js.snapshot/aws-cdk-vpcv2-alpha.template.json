@@ -171,7 +171,7 @@
       "Ref": "testsbubnetSubnet77337845"
      },
      {
-      "Ref": "testsubnetSubnetDD417829"
+      "Ref": "testsubnet3Subnet09F1B369"
      }
     ],
     "Tags": [
@@ -414,7 +414,7 @@
     "VPCintegtest1SecondaryAddress35E910ECB"
    ]
   },
-  "testsubnetSubnetDD417829": {
+  "testsubnet3Subnet09F1B369": {
    "Type": "AWS::EC2::Subnet",
    "Properties": {
     "AvailabilityZone": "us-west-2b",
@@ -438,7 +438,7 @@
     "VPCintegtest1SecondaryAddress35E910ECB"
    ]
   },
-  "testsubnetRouteTable682580B2": {
+  "testsubnet3RouteTableF1BEB104": {
    "Type": "AWS::EC2::RouteTable",
    "Properties": {
     "Tags": [
@@ -460,17 +460,17 @@
     "VPCintegtest1SecondaryAddress35E910ECB"
    ]
   },
-  "testsubnetRouteTableAssociationC106676D": {
+  "testsubnet3RouteTableAssociation97F126C9": {
    "Type": "AWS::EC2::SubnetRouteTableAssociation",
    "Properties": {
     "RouteTableId": {
      "Fn::GetAtt": [
-      "testsubnetRouteTable682580B2",
+      "testsubnet3RouteTableF1BEB104",
       "RouteTableId"
      ]
     },
     "SubnetId": {
-     "Ref": "testsubnetSubnetDD417829"
+     "Ref": "testsubnet3Subnet09F1B369"
     }
    },
    "DependsOn": [
