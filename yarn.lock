@@ -66,14 +66,6 @@
     "@aws-cdk/service-spec-types" "^0.0.158"
     "@cdklabs/tskb" "^0.0.3"
 
-"@aws-cdk/aws-service-spec@0.1.98":
-  version "0.1.98"
-  resolved "https://registry.npmjs.org/@aws-cdk/aws-service-spec/-/aws-service-spec-0.1.98.tgz#cc8224815c5bab18167bd2f11eb85ea559b2a91d"
-  integrity sha512-oif2Gxp6Tb9FoT4iw1M/DPULshqK/DL7Bbo/3ss7uTHm5DDsI48tXU4ooEiiFNwLkMAp1Bp+76iG0wkgNqWwmw==
-  dependencies:
-    "@aws-cdk/service-spec-types" "^0.0.164"
-    "@cdklabs/tskb" "^0.0.3"
-
 "@aws-cdk/aws-service-spec@^0.1.105":
   version "0.1.105"
   resolved "https://registry.npmjs.org/@aws-cdk/aws-service-spec/-/aws-service-spec-0.1.105.tgz#43bff697a6f58e016eab1934a8afce993c3e976a"
@@ -97,16 +89,6 @@
   dependencies:
     "@aws-cdk/aws-service-spec" "0.1.92"
     aws-cdk "2.1027.0"
-  optionalDependencies:
-    fsevents "2.3.2"
-
-"@aws-cdk/integ-runner@^2.192.0":
-  version "2.192.0"
-  resolved "https://registry.npmjs.org/@aws-cdk/integ-runner/-/integ-runner-2.192.0.tgz#844d22b32d44f3521c2f7140ff4e8c6a486cdbcc"
-  integrity sha512-+NsYzuwawKOtrcZ7QGK46TqjTD2lOeGI2VelFu6pW1fGsJdZTdXYq12IDQuAZBmv9wzVQm1yD952Q1wlqmrQpw==
-  dependencies:
-    "@aws-cdk/aws-service-spec" "0.1.98"
-    aws-cdk "2.1031.2"
   optionalDependencies:
     fsevents "2.3.2"
 
@@ -160,13 +142,6 @@
   version "0.0.158"
   resolved "https://registry.npmjs.org/@aws-cdk/service-spec-types/-/service-spec-types-0.0.158.tgz#f2caa73cb5383f613dc4d297ce4393db8fad9df9"
   integrity sha512-bWloZVh9AbLCJpNtWf4jBx9vMfMX7RW37nlWeidZ3i8emgPHsNQ0ytqR3RQ2RMYs1BRta1prexdd2MOL2Pww9Q==
-  dependencies:
-    "@cdklabs/tskb" "^0.0.3"
-
-"@aws-cdk/service-spec-types@^0.0.164":
-  version "0.0.164"
-  resolved "https://registry.npmjs.org/@aws-cdk/service-spec-types/-/service-spec-types-0.0.164.tgz#9c19b41234a1dd7fa5b0000c0ea61480058cdc15"
-  integrity sha512-Uy28KdwlotnGAH89PsIMH5bUEF8jb2W4FTaHrO8yRu70PgrnqH6j/xVWlyrp1JRd05CorZUhV9SWTdbCdzMU6Q==
   dependencies:
     "@cdklabs/tskb" "^0.0.3"
 
@@ -6072,13 +6047,6 @@ aws-cdk@2.1027.0:
   version "2.1027.0"
   resolved "https://registry.npmjs.org/aws-cdk/-/aws-cdk-2.1027.0.tgz#a55c61dbad53aec99fbe00f1c3cc82cb3e889235"
   integrity sha512-oo2d1o8L1GBmAG4cDzIloEBOkijf1VzpZKJJguAodUCffDDOaAd6zjEbQbedb3SY+Vg+8m9OUOEXzeLMMg3GPQ==
-  optionalDependencies:
-    fsevents "2.3.2"
-
-aws-cdk@2.1031.2:
-  version "2.1031.2"
-  resolved "https://registry.npmjs.org/aws-cdk/-/aws-cdk-2.1031.2.tgz#b206e6630011b537b500dc553c93e032d6f52730"
-  integrity sha512-FI8XkslwC1Vatjdu5MXu2ww++FcZPkPt45/DJklApxMF+aGcCKOuLf+COc12QYK88GOrLBeCED6lDjNc9m/ueA==
   optionalDependencies:
     fsevents "2.3.2"
 
