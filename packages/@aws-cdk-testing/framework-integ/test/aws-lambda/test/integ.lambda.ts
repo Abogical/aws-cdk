@@ -14,7 +14,7 @@ const app = new cdk.App({
 
 const stack = new cdk.Stack(app, 'aws-cdk-lambda-1');
 
-const fn = new lambda.Function(stack, 'MyLambda', {
+const fn = new lambda.Function(stack, 'MyLambda2', {
   code: new lambda.InlineCode('foo'),
   handler: 'index.handler',
   runtime: STANDARD_NODEJS_RUNTIME,
