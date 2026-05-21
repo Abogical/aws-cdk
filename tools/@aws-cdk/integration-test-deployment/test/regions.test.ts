@@ -41,7 +41,7 @@ describe('deployIntegrationTest', () => {
   test('uses npx with -- separator and parallel-regions', async () => {
     const env = {} as NodeJS.ProcessEnv;
     const regions = ['us-east-1', 'us-west-2'];
-    await deployIntegrationTest(env, ['test/snapshot1'], regions);
+    await deployIntegrationTest(env, ['test/snapshot1'], 'arn:aws:iam::123456789:role/TestRole', regions);
 
     expect(mockSpawn.mock.calls[0][0]).toBe('npx');
     expect(mockSpawn.mock.calls[0][1]).toEqual([
@@ -50,6 +50,7 @@ describe('deployIntegrationTest', () => {
       '--strict',
       '--directory', 'packages',
       '--force',
+      '--role-arn', 'arn:aws:iam::123456789:role/TestRole',
       '--parallel-regions', 'us-east-1,us-west-2',
       '--', 'test/snapshot1',
     ]);
