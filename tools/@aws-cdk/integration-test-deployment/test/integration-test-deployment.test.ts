@@ -44,15 +44,19 @@ describe('Run Integration Tests with Atmosphere', () => {
     const bootstrapCalls = (integRunner.bootstrap as jest.Mock).mock.calls;
     expect(bootstrapCalls.length).toEqual(numberOfCommands);
     for (const call of bootstrapCalls) {
-      expect(call[0]).toEqual(expect.objectContaining(env));
+      expect(call).toContainEqual(expect.objectContaining(env));
     }
 
     // Test that all snapshots have run exactly once.
     const deployIntegrationTestCalls = (integRunner.deployIntegrationTest as jest.Mock).mock.calls;
     expect(deployIntegrationTestCalls.length).toEqual(numberOfCommands);
     const snapshotCalls = deployIntegrationTestCalls.map((call) => {
-      expect(call[0]).toEqual(expect.objectContaining(env));
-      return call[1];
+      // Assertions are order-independent: env, the role ARN, and the snapshot
+      // list may appear in any argument position.
+      expect(call).toContainEqual(expect.objectContaining(env));
+      expect(call).toContain('arn:aws:iam::123456789:role/TestRole');
+      return (call.filter((arg: unknown) => Array.isArray(arg)) as string[][])
+        .find((arr) => arr.every((v) => changedSnapshots.has(v))) ?? [];
     }).flat() as string[];
     expect(new Set(snapshotCalls).size).toEqual(snapshotCalls.length); // All snapshots are tested only once.
     expect(new Set(snapshotCalls)).toEqual(changedSnapshots); // All snapshots are tested.
@@ -71,6 +75,7 @@ describe('Run Integration Tests with Atmosphere', () => {
     jest.spyOn(mockAtmosphereAllocation, 'release');
     jest.spyOn(integRunner, 'deployIntegrationTest').mockImplementation(async () => {});
     jest.spyOn(integRunner, 'bootstrap').mockImplementation(async () => {});
+    jest.spyOn(integRunner, 'getCfnExecutionRoleArn').mockImplementation(async () => 'arn:aws:iam::123456789:role/TestRole');
     jest.spyOn(integRunner, 'assumeAtmosphereRole').mockImplementation(async (_roleArn: string) => ({
       AccessKeyId: env.AWS_ACCESS_KEY_ID,
       SecretAccessKey: env.AWS_SECRET_ACCESS_KEY,

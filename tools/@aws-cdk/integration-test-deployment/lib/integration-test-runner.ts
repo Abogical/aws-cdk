@@ -1,6 +1,6 @@
 
 import { spawn } from 'child_process';
-import { STSClient, AssumeRoleCommand } from '@aws-sdk/client-sts';
+import { STSClient, AssumeRoleCommand, GetCallerIdentityCommand } from '@aws-sdk/client-sts';
 import { AtmosphereAllocation } from './atmosphere';
 import { getChangedSnapshots } from './utils';
 
@@ -70,7 +70,8 @@ export const deployIntegTests = async (props: {
       };
 
       await bootstrap(env, regions);
-      await deployIntegrationTest(env, batch, regions);
+      const roleArn = await getCfnExecutionRoleArn(env);
+      await deployIntegrationTest(env, batch, roleArn, regions);
       outcome = 'success';
     } catch (e) {
       console.error(e);
@@ -111,6 +112,24 @@ export const assumeAtmosphereRole = async (roleArn: string) => {
   return response.Credentials;
 };
 
+export const getCfnExecutionRoleArn = async (env: NodeJS.ProcessEnv): Promise<string> => {
+  const sts = new STSClient({
+    credentials: {
+      accessKeyId: env.AWS_ACCESS_KEY_ID!,
+      secretAccessKey: env.AWS_SECRET_ACCESS_KEY!,
+      sessionToken: env.AWS_SESSION_TOKEN,
+    },
+    region: env.AWS_REGION,
+  });
+  const identity = await sts.send(new GetCallerIdentityCommand({}));
+  // Arn is in the format arn:aws:sts::{account}:assumed-role/{role-name}/{session}
+  // Convert to arn:aws:iam::{account}:role/{role-name}
+  const account = identity.Account!;
+  const arnParts = identity.Arn!.split('/');
+  const roleName = arnParts[1];
+  return `arn:aws:iam::${account}:role/${roleName}`;
+};
+
 export const bootstrap = async (env: NodeJS.ProcessEnv, regions: string[]) => {
   console.log(`Bootstrapping ${regions.length} region(s).`);
   const spawnProcess = spawn('npx', ['cdk', 'bootstrap', ...regions.map((region) => `aws://${env.AWS_ACCOUNT_ID}/${region}`)], {
@@ -124,10 +143,12 @@ export const bootstrap = async (env: NodeJS.ProcessEnv, regions: string[]) => {
   }));
 };
 
-export const deployIntegrationTest = async (env: NodeJS.ProcessEnv, snapshotPaths: string[], regions: string[]) => {
+export const deployIntegrationTest = async (env: NodeJS.ProcessEnv, snapshotPaths: string[], roleArn: string, regions: string[]) => {
   console.log(`Deploying snapshots:\n${snapshotPaths.join('\n')}`);
 
-  const spawnProcess = spawn('npx', ['integ-runner', '--disable-update-workflow', '--strict', '--directory', 'packages', '--force', '--parallel-regions', regions.join(','), '--', ...snapshotPaths], {
+  const args = ['integ-runner', '--disable-update-workflow', '--strict', '--directory', 'packages', '--force', '--role-arn', roleArn, '--parallel-regions', regions.join(','), '--', ...snapshotPaths];
+
+  const spawnProcess = spawn('npx', args, {
     stdio: ['ignore', 'inherit', 'inherit'],
     env,
   });
